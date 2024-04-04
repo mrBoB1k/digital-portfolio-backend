@@ -24,6 +24,7 @@
 
 .galochka-section{
   margin-bottom: 26px;
+  margin-top: 15px;
 }
 
 .nav-button{ 
@@ -33,7 +34,7 @@
   padding: 20px; /* Поля вокруг текста */
   text-decoration: none; 
   border-radius: 0px; 
-  font-size: 20px;
+  font-size: 50px;
 }
   
   
@@ -43,8 +44,10 @@
 }
   
 body {
-  background-image: url("image/phone.jpg") ;
-  background-repeat: no-repeat;
+  background: url("/static/image/phone.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
 }
   
@@ -62,9 +65,40 @@ body {
   padding-bottom: 48px;
   border-radius: 2px; /* Скругляем уголки */
   margin-bottom: 28px;
-
+  
 }
 
+.checkbox-label{
+  font-size: 80%;
+}
+
+.check-box-button{
+  font-size: 80%;
+}
+
+.enter-submit-button-usual-button{
+  font-size: 25px;;
+  border: solid 1px black;;
+  border-radius: 4px;;
+  width: 220px;;
+  position: center;
+  text-align:center;  
+  }
+
+.log-in-button{
+  text-align: center;
+}
+.clear-password{
+  margin-left :0px;;
+  text-align: right;
+  color:black;
+  white-space: nowrap;
+  font-size:  80%;
+}
+
+.show-password{
+  margin-top: 25px;
+}
   .skip-text {
     justify-self: center;
     align-self: center;
@@ -72,17 +106,15 @@ body {
 
   .skip-button-section {
     background: #FBCD80;
-    border: 1px solid #000000;
-    border-radius: 3px;
-    padding: 16px 8px;
-    width: 339px;
-    height: 56px;
+    padding: 24px 8px;
+    text-decoration: none;
     align-self: center;
     line-height: 0;
-    font-size: 20px;
+    font-size: 28px;
     display: grid;
     justify-items: center;
     align-items: center;
+    color:black;
   }
   
   main{
@@ -94,10 +126,10 @@ body {
   }
 
   .registration{background-position: center;
-      width: 100%;
+
       align-self: center;
       text-align:center ;
-      font-size: 20px;
+      font-size: 200%;
       display: flex;
       flex-direction: column;
   }
@@ -110,7 +142,7 @@ body {
   
     .txt {
       text-align: left;
-      font-size:  20px;
+
   }
   
   .cnotainer {
@@ -124,7 +156,7 @@ body {
   .base-input {
     font-family: Georgia, 'Times New Roman', Times, serif;
     background-color: A0B3C2;
-    font-size: 20px;
+    font-size: 25px;
     border: 2px solid black;
     border-radius: 4px;
   }
@@ -137,6 +169,7 @@ body {
   input[type = "sumbit"]{
     font-family:Arial, Helvetica, sans-serif;
     color: A0B3C2;
+    font-size: 4444px;
   }
   
   
@@ -145,12 +178,10 @@ body {
     border-radius: 4px;
   }
   
-  .sign-in-button{
-    color:A0B3C2;
-    font-size: 16px;
+  .sign-in-button-item{
+    color:#000;
+    margin-top: 30px;
+    font-size: 70%; 
   }
   
-  .Sign-up{
-    border: 2px solid black;
-    border-radius: 4px;
-  }
+  .sign-in-button {text-align:center;}

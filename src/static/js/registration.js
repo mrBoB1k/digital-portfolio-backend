@@ -11,10 +11,10 @@ form.addEventListener('submit', async event => {
   const response = await sendData(data);
   if (response.status == 201){
     alert("Вы зарегистрировались")
-    window.location.replace("/login");
+    window.location.replace("/куда-то где страничку входа");
   }
   if (response.status == 400)
-    alert(response.detail)
+    alert("Такой пользователь уже существует")
 })
 
 //generate post-request

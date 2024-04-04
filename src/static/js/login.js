@@ -1,13 +1,4 @@
-//check validity of form and send data to /enter
-
-//TODO 
-// handle more errors from the server and display it to the user
-
-const form = document.getElementById('entrance-form');
-const checkPassword = document.querySelector('.show-password');
-const password = document.getElementById('password-field');
-
-form.addEventListener('input', checkValidity)
+// send data to /auth/jwt/login
 
 //send data after click on button
 form.addEventListener('submit', async event => {
@@ -16,32 +7,28 @@ form.addEventListener('submit', async event => {
     const data = Object.fromEntries(formData);
     const response = await sendData(data);
     if (response.status == 200)
-      alert("ура")
-    else
-      alert("не вышло")
+      window.location.replace("/url на профиль");
+    else{
+      const responseObject = JSON.parse(response);
+      const detail = responseObject.detail;
+      if (detail == "LOGIN_BAD_CREDENTIALS")
+          alert("Неверные введенные значения")
+      else 
+          alert("Вы не зрегистрированы")
+    }
 })
 
-//show password
-checkPassword.onchange = function(){
-    if (checkPassword.checked)
-        password.type = "text";
-    else
-        password.type = "password";
-}
-//function of check validity
-function checkValidity(event) {
-    const formNode = event.target.form
-    const isValid = formNode.checkValidity()
-    formNode.querySelector('button').disabled = !isValid;
-  }
-
-// function to sendData
+// function to sendData,  encode the request body into type application/x-www-form-urlencoded
 async function sendData(data) {
-return fetch('/enter', {
+  const formData = new URLSearchParams();
+  for (const key in data)
+      formData.append(key, data[key]);
+
+  return fetch('/auth/jwt/login', {
     method: 'POST',
     headers:
-    { 'Content-Type': 'application/json'},
-    body: JSON.stringify(data)})
+    { 'Content-Type': 'application/x-www-form-urlencoded'},
+    body: formData.toString()})
 }
 
 

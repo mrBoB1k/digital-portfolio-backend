@@ -12,15 +12,15 @@
         <main>
             <section class = "registration">
                 <div class = "background">
-                    <h2 class = "registration-header">Создать аккаунт</h2>
+                    <h2 class = "registration-header">Регистрация</h2>
                         <div class = "container">
                             <div class = "item">
                                 <div class ="txt">
                                         <form class ="name-form" id = "registration-form" action="#"   method="post">
                                             <!-- !!!тут action это куда будет форма отправляться!!!!--> 
                                             <p class = "name">      
-                                                <label><input type="text" name ="first_name" id ="name-field"  required  minlength="2" maxlength="12">Имя</label>
-                                                <label><input type="text" name ="last_name" id ="surname-field" required  minlength="2" maxlength="25">Фамилия</label>
+                                                <label><input type="text" name ="first_name" id ="name-field"  required  minlength="2" maxlength="12" placeholder="Имя"></label>
+                                                <label><input type="text" name ="last_name" id ="surname-field" required  minlength="2" maxlength="25" placeholder="Фамилия"></label>
                                             </p>
                                         
                                             <p>
@@ -29,8 +29,8 @@
                                             </p>                                         
                                         
                                             <p>
-                                                <label for = "mail-field">Почта</label>
-                                                    <input type ="email" name="email" id="email" required>
+                                                <label for = "mail-field"></label>
+                                                    <input type ="email" name="email" id="email" required placeholder="Почта">
                                             </p>
 
                                             <p>
@@ -39,28 +39,28 @@
                                             </p> 
 
                                             <p>
-                                                <label for = "password-field">Пароль</label>
-                                                    <input type ="password" name="password" id="password-field" value="Пароль" required> 
+                                                <label for = "password-field"></label>
+                                                    <input type ="password" name="password" id="password-field" class ="pass" required placeholder="Пароль" > 
                                             </p>
-                                            <p><input class="show-password" type="checkbox" id="show-pass">
-                                                <span class="passwordMessage" style="color: black;"></span><br>
+                                            <p><p><span class="passwordMessage" style="color: black;"></span></p>
+                                                <input class="show-password" type="checkbox" id="show-pass">
+                                                
                                                 <label class="checkbox-label" for="show-pass">Показать пароль</label></p>
                                             
                 
                                             <div class = "reg-button">       
                                                 <p>
-                                                    <button class = "registration-button-item" type ="submit" disabled>Создать</button>
+                                                    <button class = "registration-button-item" type ="submit" >Создать</button>
                                                 </p> 
                                             </div>    
                                         </form>    
-                                    <div class = "sign-in-button">
-                                        <p><button class ="sign-in-button-item" onclick ="document.location ='https://vk.com/miami51'" id="sign-in-field" >Есть аккаунт?</button></p>
-                                        <!-- !!!это ссылка завернутая в кнопку используется onclick и в одинарных кавычках ссылка
-                                                туда кароче ссылку на страницу лога поставим и заебись будет пока там мой вк!!!!--> 
-                                    </div> 
+                                    
                                 </div>         
-                            </div>       
-                        </div>
+                            </div>     
+                            <div class = "sign-in-button">
+                                <p><a class ="sign-in-button-item" href ="https://vk.com/miami51" id="sign-in-field" >Есть аккаунт?</a></p>
+                            </div>      
+                        </div>        
                 </div>    
             </section>
         </main>    
