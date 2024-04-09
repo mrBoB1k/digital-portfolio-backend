@@ -1,9 +1,11 @@
 from fastapi import FastAPI, Request
+from fastapi.params import Depends
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from auth.base_config import auth_backend, fastapi_users
+from auth.models import User
 from auth.schemas import UserRead, UserCreate
 
 from additional_info.router import router as router_information
@@ -42,6 +44,16 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+
+current_user = fastapi_users.current_user()
+
+
+@app.get("/auth/is_authenticated", tags=["auth"])
+def is_authenticated(user: User = Depends(fastapi_users.current_user())):
+    if user:
+        return True
+    else:
+        return False
 
 
 app.include_router(router_information)

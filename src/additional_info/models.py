@@ -1,9 +1,11 @@
-from sqlalchemy import ForeignKey, Table, Column, Integer, String, TIMESTAMP, MetaData
+from sqlalchemy import ForeignKey, Table, Column, Integer, String, TIMESTAMP
 from sqlalchemy.orm import relationship
 
 from database import Base
 
-metadata = MetaData()
+from src.auth.models import metaData as metadata_auth
+
+metadata = metadata_auth
 
 information = Table(
     "information",
