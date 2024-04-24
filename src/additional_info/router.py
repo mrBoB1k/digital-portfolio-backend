@@ -1,46 +1,66 @@
-from fastapi import APIRouter, Depends
-import fastapi_users
-from sqlalchemy import func, select, insert
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from auth.base_config import auth_backend
-from auth.manager import get_user_manager
 from auth.models import User
 from database import get_async_session
-from additional_info.models import Information as information
-from additional_info.schemas import AddataionalInfo
+from additional_info.models import Information
+from additional_info.schemas import AddataionalInfoPut, AddataionalInfoRead
+from auth.utils import get_user_db
+from auth.base_config import current_user
 
 router = APIRouter(
     prefix="/information",
     tags=["information"]
 )
 
+# async def get_current_user(user: User = Depends(get_user_db)):
+#     if not user:
+#         raise HTTPException(status_code=401, detail="Unauthorized")
+#     return user
+# , dependencies=[Depends(get_current_user)]
 
-# @router.get("/")
-# async def get_user_additional_info(userid: int, session: AsyncSession = Depends(get_async_session)):
-#     query = select(information).where(information.c.user_id == userid)
-#     result = await session.execute(query)
-#     return result.all()
+@router.put("/", response_model=AddataionalInfoRead)
+async def add_user_additional_info(
+    info_put: AddataionalInfoPut,
+    user: User = Depends(current_user),
+    session: AsyncSession = Depends(get_async_session)
+):
+    # Ваша текущая реализация функции здесь
+    stmt = select(Information).filter(Information.user_id == user.id)
+    result = await session.execute(stmt)
+    existing_info = result.scalars().first()
 
+    if existing_info:
+        # Если информация найдена, обновляем ее
+        existing_info.additional_information = info_put.additional_information
+        existing_info.telegram = info_put.telegram
+        existing_info.vkontakte = info_put.vkontakte
+        existing_info.education = info_put.education
+        existing_info.work = info_put.work
+    else:
+        # Если информация не найдена, создаем новую запись
+        new_info = Information(
+            user_id=user.id,
+            additional_information=info_put.additional_information,
+            telegram=info_put.telegram,
+            vkontakte=info_put.vkontakte,
+            education=info_put.education,
+            work=info_put.work
+        )
+        session.add(new_info)
 
+    try:
+        await session.commit()
+    except Exception as e:
+        await session.rollback()
+        raise HTTPException(status_code=500, detail="Failed to update information")
 
-# fastapi_users = fastapi_users.FastAPIUsers[User, int](
-#     get_user_manager,
-#     [auth_backend],
-# )
-
-# current_user = fastapi_users.current_user()
-
-
-# @router.post("/")
-# async def add_user_additional_info(addataional_info: AddataionalInfo, user: User = Depends(current_user), session: AsyncSession = Depends(get_async_session)):
-#     stmt = insert(information).values(
-#         user_id=user.id,
-#         additional_information=addataional_info.additional_information,
-#         telegram=addataional_info.telegram,
-#         vkontakte=addataional_info.vkontakte,
-#         telephone=addataional_info.telephone
-#     )
-#     await session.execute(stmt)
-#     await session.commit()
-#     return {"status": "success"}
+    return AddataionalInfoRead(
+        user_id=user.id,
+        additional_information=info_put.additional_information,
+        telegram=info_put.telegram,
+        vkontakte=info_put.vkontakte,
+        education=info_put.education,
+        work=info_put.work
+    )

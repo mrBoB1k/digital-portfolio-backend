@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from enum import Enum
 from typing import Optional
 
 from fastapi_users import schemas
@@ -19,7 +18,7 @@ class UserRead(schemas.BaseUser[int]):
     is_verified: bool = False
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         arbitrary_types_allowed = True
 
 
@@ -33,12 +32,3 @@ class UserCreate(schemas.BaseUserCreate):
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
     is_verified: Optional[bool] = False
-
-UserCreate.model_rebuild()
-UserRead.model_rebuild()
-# class UserUpdate(schemas.BaseUserUpdate):
-#     password: Optional[str] = None
-#     email: Optional[str] = None
-#     is_active: Optional[bool] = None
-#     is_superuser: Optional[bool] = None
-#     is_verified: Optional[bool] = None
