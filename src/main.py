@@ -34,7 +34,7 @@ app.include_router(
 
 
 @app.get("/auth/is_authenticated", tags=["Auth"])
-def is_authenticated(user: User = Depends(current_user)):
+async def is_authenticated(user: User = Depends(current_user)):
     if user:
         return True
     else:

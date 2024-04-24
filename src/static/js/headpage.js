@@ -2,9 +2,6 @@ fetch("/auth/is_authenticated")
     .then(response => {
         if (response.status != 200)
             changeStyle()
-        else{
-            alert(alert("Ваши куки скомуниздины" + document.cookie))
-        }
     });
 
 

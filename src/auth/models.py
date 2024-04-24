@@ -15,6 +15,7 @@ class User(UserBase):
     email = Column(String, nullable=False, unique=True)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
+    city =  Column(String, nullable=False)
     sex = Column(String, nullable=False)
     birth_date = Column(TIMESTAMP, nullable=False)
     registered_at = Column(TIMESTAMP, default = datetime.now, nullable=False)
@@ -24,20 +25,3 @@ class User(UserBase):
     is_verified: bool = Column(Boolean, default=False, nullable=False)
 
     information = relationship('Information', backref='user', uselist=False)
-
-# user  = Table(
-#     "user",
-#     metaData,
-#     Column("id", Integer, primary_key=True),
-#     Column("email", String, nullable=False),
-#     Column("first_name", String, nullable=False),
-#     Column("last_name", String, nullable=False),
-#     Column("hashed_password", String, nullable=False),
-#     Column("sex", String, nullable=False),
-#     Column("birth_date", TIMESTAMP, nullable=False),
-#     Column("registered_at", TIMESTAMP, default = datetime.now, nullable=False),
-#     Column("is_active", Boolean, default=True, nullable=False),
-#     Column("is_superuser", Boolean, default=False, nullable=False),
-#     Column("is_verified", Boolean, default=False, nullable=False),
-#     extend_existing=True
-# )

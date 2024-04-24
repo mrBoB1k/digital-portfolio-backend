@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, MetaData, String, ForeignKey
+from sqlalchemy import ARRAY, Column, Integer, MetaData, String, ForeignKey
 from sqlalchemy.orm import relationship
 from auth.models import UserBase
 
@@ -11,9 +11,9 @@ class Information(InformationBase):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    additional_information = Column(String, nullable=False)
-    telegram = Column(String, nullable=False)
-    vkontakte = Column(String, nullable=False)
+    technology = Column(ARRAY(String), nullable=False)
+    tg = Column(String, nullable=False)
+    vk = Column(String, nullable=False)
     education = Column(String, nullable=False)
     work = Column(String, nullable=False)
     # , unique=True

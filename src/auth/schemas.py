@@ -10,6 +10,7 @@ class UserRead(schemas.BaseUser[int]):
     email: str
     first_name: str
     last_name: str
+    city: str
     sex: str
     birth_date: datetime
     registered_at: datetime
@@ -25,6 +26,7 @@ class UserRead(schemas.BaseUser[int]):
 class UserCreate(schemas.BaseUserCreate):
     first_name: str
     last_name: str
+    city: str
     sex: str
     birth_date: datetime
     email: str
