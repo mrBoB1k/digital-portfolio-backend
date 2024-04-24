@@ -54,29 +54,21 @@ app.include_router(router_information)
 
 
 
-origins = [
-    "http://192.168.1.181:8000",
-    "http://localhost:5432",
-    DATABASE_URL,
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    # allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
-    # allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
-    #                "Authorization", "Access-Control-Allow-Credentials", "Vary", "Accept", "Connection",
-    #                 "Referer", "Host", "User-Agent", "Accept-Language", "Accept-Encoding", "content-type",
-    #                 "Referrer Policy", "Authorization", "Authorizations", "APIKeyCookie", "apiKey", "authorizations",
-    #                 "bonds", "cookie", "In", "Name", "Value"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+# origins = [
+#     "http://192.168.1.181:8000",
+#     "http://localhost:5432",
+#     DATABASE_URL,
+# ]
 # app.add_middleware(
-#         CORSMiddleware,
-#         allow_origins=origins,
-#         allow_credentials=True,
-#         allow_methods=["*"],
-#         allow_headers=["*"],
-#     ),
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     # allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+#     # allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+#     #                "Authorization", "Access-Control-Allow-Credentials", "Vary", "Accept", "Connection",
+#     #                 "Referer", "Host", "User-Agent", "Accept-Language", "Accept-Encoding", "content-type",
+#     #                 "Referrer Policy", "Authorization", "Authorizations", "APIKeyCookie", "apiKey", "authorizations",
+#     #                 "bonds", "cookie", "In", "Name", "Value"],
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )

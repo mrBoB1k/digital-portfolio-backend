@@ -22,3 +22,8 @@ async def read_login(request: Request):
 @router.get("/", response_class=HTMLResponse)
 async def read_login(request: Request):
     return templates.TemplateResponse("headpage.html", {"request": request})
+
+
+@router.get("/profile", response_class=HTMLResponse)
+async def read_login(request: Request):
+    return templates.TemplateResponse("profile.html", {"request": request})
