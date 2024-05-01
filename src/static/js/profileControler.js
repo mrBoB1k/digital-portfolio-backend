@@ -1,31 +1,4 @@
 
-// fetch("/auth/is_authenticated")
-//     .then(response => {
-//         if (response != 200)
-//         {
-//             let link2 = document.getElementById("link-2");
-//             let link3 = document.getElementById("link-3")
-//             let link4 = document.getElementById("link-4")
-//             link2.style.display = 'none';
-//             link3.innerText = "Вход"
-//             link3.href = "/login"
-//             link3.style.marginLeft = "calc(50% - 130px)";
-//             link4.innerText = "Регистрация"
-//             link4.href = "/register"
-//             changeStyle()
-//         }
-//         else{
-//             checkOwnerProfile()
-//             .then(isMyprofile => {
-//                 if (!isMyprofile) {
-//                     changeStyle();
-//                     let link2 = document.getElementById("link-2");
-//                     link2.href = "profile/id"
-//                 }
-//             });
-//         }
-//     });
-
 checkOwnerProfile()
 
 function checkOwnerProfile(){
@@ -37,9 +10,8 @@ function checkOwnerProfile(){
 
     fetch("/is_my_profile/" + number)
     .then(response => {
-        if (response.status == 200 ){
-            if (!response)
-                changeStyle();
+        if (response.status == 200){
+            return response.json();
         }
         else {
             let link2 = document.getElementById("link-2");
@@ -51,10 +23,14 @@ function checkOwnerProfile(){
             link3.style.marginLeft = "calc(50% - 130px)";
             link4.innerText = "Регистрация"
             link4.href = "/register"
-            changeStyle()
+            // changeStyle()
         }
     })
-}
+    .then(data => {
+        if (!data) {
+            changeStyle();
+        }})
+    }
 
 function changeStyle(){
     

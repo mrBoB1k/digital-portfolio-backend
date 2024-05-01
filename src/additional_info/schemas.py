@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 
 class AddataionalInfoPut(BaseModel):
+    email: str
     technology: List[str]
     tg: str
     vk: str
@@ -14,6 +15,7 @@ class AddataionalInfoPut(BaseModel):
 
 class AddataionalInfoPutRead(BaseModel):
     user_id: int
+    email: str
     technology: List[str]
     tg: str
     vk: str
@@ -42,3 +44,11 @@ class AddataionalInfoRead(BaseModel):
     class Config:
         from_attributes = True
         arbitrary_types_allowed = True
+
+
+class UserUpdate(BaseModel):
+    first_name: str
+    last_name: str
+    birth_date: datetime
+    sex: str
+    city: str

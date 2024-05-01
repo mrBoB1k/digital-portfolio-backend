@@ -1,14 +1,13 @@
 from datetime import datetime
-
-from sqlalchemy import  Column, Integer, String, TIMESTAMP, Boolean, MetaData, Table
-from sqlalchemy.ext.declarative import declarative_base
+from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
+from sqlalchemy import  Column, Integer, String, TIMESTAMP, Boolean
 from sqlalchemy.orm import relationship
 
-metaData = MetaData()
+from download.models import Download
 
-UserBase = declarative_base(metadata = metaData)
+from database import Base
 
-class User(UserBase):
+class User(SQLAlchemyBaseUserTable[int],Base):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
@@ -25,3 +24,6 @@ class User(UserBase):
     is_verified: bool = Column(Boolean, default=False, nullable=False)
 
     information = relationship('Information', backref='user', uselist=False)
+    download = relationship(Download, backref='user_download')
+    # download = relationship('src.download.models.Download', backref='user_download')
+

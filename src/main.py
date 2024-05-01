@@ -1,18 +1,16 @@
 from fastapi import FastAPI
 from fastapi.params import Depends
 from fastapi.staticfiles import StaticFiles
-
+from fastapi.middleware.cors import CORSMiddleware
 
 from auth.base_config import auth_backend, fastapi_users, current_user
 from auth.models import User
 from auth.schemas import UserRead, UserCreate
 
 from additional_info.router import router as router_information
-from database import DATABASE_URL
 from page_router import router as router_page
+from download.download_router import router as router_download
 
-from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware
 
 app = FastAPI(
     title="Digital portfolio"
@@ -32,7 +30,6 @@ app.include_router(
     tags=["Auth"],
 )
 
-
 @app.get("/auth/is_authenticated", tags=["Auth"])
 async def is_authenticated(user: User = Depends(current_user)):
     if user:
@@ -51,14 +48,9 @@ app.mount("/static/image", StaticFiles(directory="static/image"), name="static_i
 app.include_router(router_page)
 
 app.include_router(router_information)
+app.include_router(router_download)
 
 
-
-# origins = [
-#     "http://192.168.1.181:8000",
-#     "http://localhost:5432",
-#     DATABASE_URL,
-# ]
 # app.add_middleware(
 #     CORSMiddleware,
 #     allow_origins=origins,
@@ -72,3 +64,18 @@ app.include_router(router_information)
 #     allow_methods=["*"],
 #     allow_headers=["*"],
 # )
+
+
+origins = [
+    "http://192.168.1.181:8000",
+    "http://localhost:5432",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+                   "Authorization"],
+)

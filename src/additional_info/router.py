@@ -1,5 +1,4 @@
-from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Path
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 import sqlalchemy
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -7,12 +6,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.models import User
 from database import get_async_session
 from additional_info.models import Information
-from additional_info.schemas import AddataionalInfoPut, AddataionalInfoPutRead, AddataionalInfoRead
-from auth.utils import get_user_db
+from additional_info.schemas import AddataionalInfoPut, AddataionalInfoPutRead, AddataionalInfoRead, UserUpdate
 from auth.base_config import current_user
 
 router = APIRouter(
-    tags=["information"]
+    
 )
 
 # async def get_current_user(user: User = Depends(get_user_db)):
@@ -21,7 +19,7 @@ router = APIRouter(
 #     return user
 # , dependencies=[Depends(get_current_user)]
 
-@router.put("/send_additional_information", response_model=AddataionalInfoPutRead)
+@router.put("/send_additional_information", tags=["information"], response_model=AddataionalInfoPutRead)
 async def add_user_additional_info(
     info_put: AddataionalInfoPut,
     user: User = Depends(current_user),
@@ -34,6 +32,7 @@ async def add_user_additional_info(
 
     if existing_info:
         # Если информация найдена, обновляем ее
+        existing_info.email = info_put.email
         existing_info.technology = info_put.technology
         existing_info.tg = info_put.tg
         existing_info.vk = info_put.vk
@@ -43,6 +42,7 @@ async def add_user_additional_info(
         # Если информация не найдена, создаем новую запись
         new_info = Information(
             user_id=user.id,
+            email = info_put.email,
             technology=info_put.technology,
             tg=info_put.tg,
             vk=info_put.vk,
@@ -59,6 +59,7 @@ async def add_user_additional_info(
 
     return AddataionalInfoPutRead(
         user_id=user.id,
+        email = info_put.email,
         technology=info_put.technology,
         tg=info_put.tg,
         vk=info_put.vk,
@@ -68,7 +69,7 @@ async def add_user_additional_info(
 
 
 
-@router.get("/get_additional_information/{user_id}", response_model=AddataionalInfoRead)
+@router.get("/get_additional_information/{user_id}", tags=["information"], response_model=AddataionalInfoRead)
 async def get_user_additional_info(
     user_id: int,
     session: AsyncSession = Depends(get_async_session),
@@ -94,7 +95,8 @@ async def get_user_additional_info(
             education='',
             work='',
             vk='',
-            email=user.email,
+            # email=user.email,
+            email='',
             tg='',
         )
     else:
@@ -109,14 +111,15 @@ async def get_user_additional_info(
             education=user.information.education,
             work=user.information.work,
             vk=user.information.vk,
-            email=user.email,
+            # email=user.email,
+            email=user.information.email,
             tg=user.information.tg,
         )
 
     return additional_info
 
 
-@router.get("/is_my_profile/{user_id}", response_model=bool)
+@router.get("/is_my_profile/{user_id}", tags=["information"], response_model=bool)
 async def is_my_profile(
     user_id: int,
     user: User = Depends(current_user),
@@ -125,3 +128,35 @@ async def is_my_profile(
         return True
     else:
         return False
+    
+@router.put("/change_basic_information", response_model=UserUpdate, tags=["information"])
+async def change_basic_information(
+    info_put: UserUpdate,
+    user: User = Depends(current_user),
+    session: AsyncSession = Depends(get_async_session)
+):
+    if info_put.sex != "male" and info_put.sex != "female":
+            raise HTTPException(status_code=404, detail="Sex can be female or male")
+    
+    stmt = select(User).filter(User.id == user.id)
+    result = await session.execute(stmt)
+    existing_user = result.scalars().first()
+
+    if existing_user:
+        # Обновляем информацию пользователя
+        existing_user.first_name = info_put.first_name
+        existing_user.last_name = info_put.last_name
+        existing_user.birth_date = info_put.birth_date.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
+        existing_user.sex = info_put.sex
+        existing_user.city = info_put.city
+
+        try:
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise HTTPException(status_code=500, detail="Failed to update information")
+
+        # Возвращаем обновленные данные пользователя в формате UserUpdate
+        return UserUpdate(**info_put.dict())
+
+    raise HTTPException(status_code=404, detail="User not found")

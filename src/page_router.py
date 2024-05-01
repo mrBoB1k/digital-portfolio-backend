@@ -7,9 +7,9 @@ from fastapi import Path, Query
 
 from auth.base_config import current_user
 from auth.models import User
+
+
 router = APIRouter()
-
-
 
 templates = Jinja2Templates(directory="static/html")
 
