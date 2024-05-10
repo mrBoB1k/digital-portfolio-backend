@@ -22,6 +22,7 @@ from src.database import metadata, Base
 from src.auth.models import *
 from src.download.models import *
 from src.additional_info.models import *
+from src.subscription.models import *
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -43,6 +44,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = [DownloadBase.metadata, InformationBase.metadata]
 target_metadata = [metadata, Base.metadata]
+# target_metadata = Base.metadata
 # target_metadata = DownloadBase.metadata
 # target_metadata = [metadata_auth, metadata_additional_info]
 

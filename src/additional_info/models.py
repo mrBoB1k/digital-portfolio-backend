@@ -1,5 +1,6 @@
-from sqlalchemy import ARRAY, Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from database import Base
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 class Information(Base):

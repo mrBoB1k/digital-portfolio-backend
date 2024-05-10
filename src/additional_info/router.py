@@ -135,8 +135,8 @@ async def change_basic_information(
     user: User = Depends(current_user),
     session: AsyncSession = Depends(get_async_session)
 ):
-    if info_put.sex != "male" and info_put.sex != "female":
-            raise HTTPException(status_code=404, detail="Sex can be female or male")
+    if info_put.sex != "Мужской" and info_put.sex != "Женский":
+            raise HTTPException(status_code=404, detail="Sex can be Женский or Мужской")
     
     stmt = select(User).filter(User.id == user.id)
     result = await session.execute(stmt)

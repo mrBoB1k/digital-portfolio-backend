@@ -10,7 +10,9 @@ from auth.schemas import UserRead, UserCreate
 from additional_info.router import router as router_information
 from page_router import router as router_page
 from download.download_router import router as router_download
-
+from download.download_router import router2 as router_avatar
+from search.router import router as router_search
+from subscription.router import router as router_sub
 
 app = FastAPI(
     title="Digital portfolio"
@@ -44,11 +46,20 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/static/css", StaticFiles(directory="static/css"), name="static_css")
 app.mount("/static/js", StaticFiles(directory="static/js"), name="static_js")
 app.mount("/static/image", StaticFiles(directory="static/image"), name="static_image")
+app.mount("/static/fonts", StaticFiles(directory="static/fonts"), name="static_fonts")
+
 
 app.include_router(router_page)
 
 app.include_router(router_information)
+
 app.include_router(router_download)
+
+app.include_router(router_avatar)
+
+app.include_router(router_search)
+
+app.include_router(router_sub)
 
 
 # app.add_middleware(

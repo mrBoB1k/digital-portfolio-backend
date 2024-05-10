@@ -13,42 +13,42 @@
                     class="nav-link-1" id ="link-1"><nobr>Лого</nobr></a>
                 <a href = "/my_profile" 
                         class="nav-link-2" id ="link-2"><nobr>Моя страница</nobr></a>
-                <a href = "#" 
+                <a href = "/search" 
                     class="nav-link-3" id ="link-3"><nobr>Поиск</nobr></a>                           
                         <!--Вот тут если не авторизированный пользователь, то вторая ссылка пропадает display:none, в третьей текст меняется на "Вход"
                         и добавляется margin-left: calc(50% - 130px);, у в четвертой текст меняется на "Регистрация" и соответственно ссылки меняются
                         все это по класссам и айдишникам джавой -->
-                        <a href = ""
-                        class="nav-link-4" id ="link-4"><nobr>Выйти</nobr></a>      
-                    <script>
-                        document.getElementById("link-4").addEventListener("click", function(event) {
-                            event.preventDefault();
-                            fetch("/auth/logout", {
-                                method: "POST",
-                                headers: {
-                                "Content-Type": "application/json"
-                                }
-                            }).then( response => {
-                                if (response.status == 200 || response.status == 204)
-                                {
-                                    console.log("here")
-                                    location.reload();
-                                }
-                            })
-                        });
-                    </script>                         
+                <a href ="/register" class="nav-link-4 hidden-button" id="link-5"><nobr>Регистрация</nobr></a>   
+                <a href = ""
+                class="nav-link-4" id ="link-4"><nobr>Выйти</nobr></a>      
+                <script>
+                    document.getElementById("link-4").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        fetch("/auth/logout", {
+                            method: "POST",
+                            headers: {
+                            "Content-Type": "application/json"
+                            }
+                        }).then( response => {
+                            if (response.status == 200 || response.status == 204)
+                                location.reload();
+                        })
+                    });
+                </script>                         
         </header>
 
         <main>
             <section class = "main-info-1">
                 <div>                  
-                    <img class = "avatar" src ="/static/image/login.jpg" id = "profile-avatar" style="height: 120px; width: 120px;">
-                    
+                    <img class = "avatar" src =" " id = "profile-avatar" style="height: 120px; width: 120px;">
                     <div class = "name"  id = "user-name"> 
                         <span id = "first_name">Имя</span> 
                         <span id = "last_name">Фамилия</span> 
                     </div>
-                   
+                    <form id="form-sub">
+                        <button class="make-sub" type ="submit" id="make-sub">Подписаться</button>
+                        <button class="make-sub hidden-button" type ="submit" id="refuse-sub">Отписаться</button>
+                    </form>
                     <div id="feedback">
                         <button class ="edit-file">Редактировать профиль</button>
                         <div class="popup">
@@ -60,13 +60,13 @@
                                         <p><input name="name" placeholder="Имя" type="text" id ="name-edit">
                                         <input name="surname" placeholder="Фамилия" type="text" id ="surname-edit" ></p>
                                         <p>Дата рождения <input name="date"  type="date" id ="date-edit" required></p>
-                                        <p><label>Мужской<input type = "radio" name ="sex"  value = "male" id="male-field-edit" required></label>
-                                        <label>Женский<input type = "radio" name ="sex" value = "female" id="female-field-edit" required></label> 
+                                        <p><label>Мужской<input type = "radio" name ="sex"  value = "Мужской" id="male-field-edit" required></label>
+                                        <label>Женский<input type = "radio" name ="sex" value = "Женский" id="female-field-edit" required></label> 
                                         <input name="city" placeholder="Город" type="text" id ="city-edit" ></p>          
                                         <button class = "last" type ="submit" id ="send-main-data-profile" >Сохранить</button>
                                     </form>
                                     <p class ="edit-other-info">Редактирование остальной информации</p>
-                                    <form   method="post" id ="form-2">
+                                    <form method="post" id ="form-2">
                                         <div class="form_label">
                                             <div class="multiselect_block">
                                               <label for="select-1" class="field_multiselect">Чем вы занимаетесь</label>
@@ -96,7 +96,7 @@
                                             </div>
                                             <span class="error_text"></span>
                                             <script>
-                                                
+                                           
                                                 let multiselect_block = document.querySelectorAll(".multiselect_block");
                                                 multiselect_block.forEach(parent => {
                                                     let label = parent.querySelector(".field_multiselect");
@@ -120,7 +120,6 @@
                                                     })
                                                 })
                                               </script>
-                                              <!-- скрипт который делает список выпадающий пиздатый- https://habr.com/ru/articles/564844/ -->
                                         </div>
                                         <p><input name="education" placeholder="Образование" type="text" id ="education-edit">
                                         <input name="work" placeholder="Работа" type="text" id ="work-edit"></p>
@@ -129,6 +128,11 @@
                                         <p><input name="email" placeholder="Почта для связи" type="text" id ="mail-edit" ></p>
                                         <br>
                                         <button class = "last-2" type ="submit" id ="send-other-data-profile" >Сохранить</button>
+                                    </form>
+                                    <p class ="edit-other-info">Обновление фотографии</p>
+                                    <form enctype="multipart/form-data" method="post"  id ="form-3">
+                                         <input type = "file" name = "file" id ="control" accept=".jpg">
+                                         <button type ="submit" id="send-file">Отправить</button>
                                     </form>
                                 </div>
                               </div>
@@ -147,9 +151,9 @@
                             var maleFieldEditInput = document.getElementById("male-field-edit");
                             var femaleFieldEditInput = document.getElementById("female-field-edit");
                             
-                            if (document.getElementById("sex").textContent === "male")
+                            if (document.getElementById("sex").textContent === "Мужской")
                                 maleFieldEditInput.checked = true;
-                            else if (document.getElementById("sex").textContent === "female")
+                            else if (document.getElementById("sex").textContent === "Женский")
                                 femaleFieldEditInput.checked = true;
                 
                             var dictionary = {
@@ -184,16 +188,16 @@
                         <li class = "about-me-list-item">Город: <span id ="city"></span></li>
                         <li class = "about-me-list-item">Род деятельности: <span id ="technology"></span></li>
                         <li class = "about-me-list-item">Дата рождения: <span id ="birth_date"></span></li>
-                        <li class = "about-me-list-item">Пол: <span id ="sex">female</span></li>
+                        <li class = "about-me-list-item">Пол: <span id ="sex"></span></li>
                         <li class = "about-me-list-item">Образование: <span id ="education"></span></li>
                         <li class = "about-me-list-item">Работа: <span id ="work"></span></li>
                     </ul>
                 </div>
                 
                 <div class ="Subscriptions">
-                    <ul class ="Subscriptions-list"><a class = "go-to-Subscriptions-page" href ="#"><span class ="header">Подписки:</span> </a><span class ="header" id ="Subscriptions-count">0</span>
-                        <div class = "Subscribers-list">
-                            <li class = "Subscribers-list-item">
+                    <ul class ="Subscriptions-list"><a class = "go-to-Subscriptions-page" href ="#"><span class ="header">Подписки:</span> </a><span class ="header" id ="subscriptions-count">0</span>
+                        <div class = "subscriptions-list">
+                            <!-- <li class = "Subscribers-list-item">
                                 <a  href = "https://vk.com/miami51"  class = "profiles-href"><img class = "Subscribers-avatar" src ="/static/image/login.jpg" id = "avatar-1" style="height: 80px; width: 80px;" href="">
                                 <p class = "Subscribers-name" id ="name-1">Имя<br>Фамилия</p></a>
                             </li>
@@ -221,7 +225,7 @@
                             <li class = "Subscribers-list-item">
                                 <a href = "https://vk.com/miami51" class = "profiles-href"><img class = "Subscribers-avatar"src ="/static/image/login.jpg" id = "avatar-6" style="height: 80px; width: 80px;">
                                 <p class = "Subscribers-name" id ="name-6">Имя<br> Фамилия</p></a>
-                            </li>       
+                            </li>        -->
                         </div>   
                     </ul>
                 </div>
@@ -236,11 +240,11 @@
                 </div>
 
                 <div class ="Subscribers">
-                    <ul class ="Subscribers-text"><a class ="go-to-Subscribers-page" href ="#"><span class ="header">Подписчики:</span> </a><span class ="header" id ="Subscriptions-count">0</span>
+                    <ul class ="Subscribers-text"><a class ="go-to-Subscribers-page" href ="#"><span class ="header">Подписчики:</span> </a><span class ="header" id ="subscribers-count">0</span>
                         <div class = "Subscribers-list">
-                            <li class = "Subscribers-list-item">
+                            <!-- <li class = "Subscribers-list-item">
                                 <a href = "https://vk.com/miami51" class = "profiles-href"><img class = "Subscribers-avatar" src ="/static/image/login.jpg" id = "avatar-7" style="height: 80px; width: 80px;">
-                                <p class = "Subscribers-name" id ="name-7">Имя<br> Фамилия</p></a>
+                                <p class = "Subscribers-name" id ="first_name_sub">Имя</p> <p  class = "Subscribers-name" id ="last_name_sub">Фамилия</p></a>
                             </li>
 
                             <li class = "Subscribers-list-item">
@@ -266,7 +270,7 @@
                             <li class = "Subscribers-list-item">
                                 <a href = "https://vk.com/miami51" class = "profiles-href"><img class = "Subscribers-avatar" src ="/static/image/login.jpg" id = "avatar-12" style="height: 80px; width: 80px;">
                                 <p class = "Subscribers-name" id ="name-12">Имя<br> Фамилия</p></a>
-                            </li>
+                            </li> -->
                         </div>        
                     </ul>
                 </div>
@@ -278,22 +282,34 @@
                     <div class = "tags-list">
                         <p class = "results-header">Достижения:</p>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id = "education">Учёба</button>
+                            <form  method="post" id ="study-form" data-tag="study">
+                                <button class = "tags-list-item-name" id = "study">Учёба</button>
+                            </form>
                         </div>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id = "since">Наука</button>
+                            <form  method="post" id ="science-form" data-tag="science">
+                                <button class = "tags-list-item-name" id = "science" >Наука</button>
+                            </form>
                         </div>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id ="not-education">Внеучебная деятельность</button>
+                            <form  method="post" id ="not-education-form" data-tag="not-education">
+                                <button class = "tags-list-item-name" id ="not-education" >Внеучебная деятельность</button>
+                            </form>
                         </div>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id ="creative">Творчество</button>
+                            <form  method="post" id ="creative-form"  data-tag="creative" >
+                                <button class = "tags-list-item-name" id ="creative">Творчество</button>
+                            </form>
                         </div>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id ="sport">Спорт</button>
+                            <form  method="post" id ="sport-form" data-tag="sport">
+                                <button class = "tags-list-item-name" id ="sport" >Спорт</button>
+                            </form>
                         </div>
                         <div class = "tags-list-item">
-                            <button class = "tags-list-item-name" id ="other">Другое</button>
+                            <form  method="post" id ="other-form" data-tag="other">
+                                <button class = "tags-list-item-name" id ="other" >Другое</button>
+                            </form>
                         </div>
                     </div>
 
@@ -304,11 +320,11 @@
                                 <div class="popup-1">
                                     <div class="popup__container">
                                       <div class="popup__wrapper-2">
-                                        <div id="form-avatar">    
+                                        <div id="form-avatar">   
                                             <p class ="edit-main-info">Добавление файла</p>
-                                            <form  method="post" id ="file-form">
-                                                <input type = "file" name = "file" id ="control" multiple="multiple" accept=".jpg, .jpeg, .png">
-                                                <input type ="submit" value ="Отправить" id="send-file" accept=".jpg, .jpeg, .png">
+                                            <form enctype="multipart/form-data" method="post" id ="add-file-form">
+                                                <input type = "file" name = "file" id="file"  accept="">
+                                                <input type ="submit" value ="Отправить" id="send-file">
                                             </form>
                                         </div>
                                       </div>
@@ -332,22 +348,105 @@
                                     }});
                             </script>
                             <div class = "files-list-item">
-                                <p class = "file-item">
-                                    <span class = "file-name" id ="file-name">Имя Файла</span>
-                                    <button class = "delete-file" id ="delete-file">Удалить файл</button>
-                                    <!--тут надо сделать чтоб удалялся файл, я хз как с моей стороный это сделать, что мне отправлять в форме, поэтому
-                                    кнопку сделал
-                                    тут в теории можно каждому файлу class = "file-item" навешивать айдишник и с ним работать-->
-                                </p>
+                                <!-- <p class = "file-item" id = "17">
+                                    <span class = "file-name">Имя Файла</span>
+                                    <button class = "download-file" id = "17" onclick="onDownLoad(this)">Скачать файл</button>
+                                    <button class = "delete-file" id ="17" onclick="onDelete(this)">Удалить файл</button>
+                                </p> -->
                             </div>
+                            <!-- <div class="popup-2">
+                                    <div class="popup__container">
+                                      <div class="popup__wrapper-3">
+                                        <div id="form-avatar">   
+                                            <p class ="edit-main-info">Вы точно хотите удалить файл?</p>
+                                            <button class = "agree-button" id = "17" onclick="onDownLoad(this)">Скачать файл</button>
+                                            <button class = "disage-button" id ="17" onclick="onDelete(this)">Удалить файл</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div> -->
                         </div>
                     </div>
                 </div>             
             </section>
         </main> 
+        <script>
+            const fullUrl = window.location.href;
+            const match = fullUrl.match(/\/(\d+)$/);
+            if (match) {
+                const id = match[1];
+                const imageUrl = `/avatar/${id}`;
+                const avatarImg = document.getElementById('profile-avatar');
+                avatarImg.src = imageUrl;
+            }
+        </script>
+        <script>
+            function onDelete(button) {
+                var id = button.id;
+                fetch(`/file/delete/${id}`,
+                {
+                    method: 'DELETE',
+            })
+                .then(response => 
+                {
+                    if (response.ok)
+                    {
+                        alert("файл удален")
+                        document.querySelector(`.file-item[id="${id}"]`).remove();
+                        AddEmpty()
+                    }
+                })
+            }
+
+            function onDownLoad(button){
+                var id = button.id;
+                fetch(`/file/download/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Ошибка загрузки файла');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = document.querySelector(`.file-name[id="${id}"]`).textContent;;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                });
+            }
+
+            function AddEmpty()
+            {
+                files = document.querySelectorAll(".file-item")
+                if (files.length == 0)
+                    DoNotFile()
+            }
+        </script>
+        </script>
+        <script>
+            const buttons = document.querySelectorAll('.tags-list-item-name');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    console.log(this)
+                });
+            });
+        </script>
+        <script src="/static/js/profileControler.js"></script>
+        <script src ="/static/js/profileGetFiles.js"></script>
         <script src="/static/js/profileGetInfo.js"></script> 
         <script src="/static/js/profileSendProfInfo.js"></script>
-        <script src="/static/js/profileControler.js"></script>
+        <script src="/static/js/profileSendAvatar.js"></script>
+        <script src="/static/js/profileAddFile.js"></script>
+        <script src="/static/js/profileGetSub.js"></script>
+        <script src="/static/js/profileMakeSub.js"></script>
     </body>
     <footer>
     </footer>       

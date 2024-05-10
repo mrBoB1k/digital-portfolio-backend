@@ -41,3 +41,7 @@ async def ling_to_my_profile(
 ):
     profile_url = request.url_for("profile", user_id=user.id)
     return RedirectResponse(url=str(profile_url))
+
+@router.get("/search", response_class=HTMLResponse)
+async def read_register(request: Request):
+    return templates.TemplateResponse("search.html", {"request": request})

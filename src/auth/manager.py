@@ -29,9 +29,9 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
             raise exceptions.UserAlreadyExists()
 
 
-        if user_create.sex != "male" and user_create.sex != "female":
+        if user_create.sex != "Мужской" and user_create.sex != "Женский":
             raise exceptions.InvalidPasswordException(
-                reason="sex should be at male or female"
+                reason="sex should be at Мужской or Женский"
             )
         
         if len(user_create.password) > 20 or len(user_create.password) < 8 :
