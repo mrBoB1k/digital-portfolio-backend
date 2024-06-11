@@ -14,5 +14,3 @@ class Information(Base):
     vk = Column(String, nullable=False)
     education = Column(String, nullable=False)
     work = Column(String, nullable=False)
-    # , unique=True
-    # user = relationship('User', backref='information')

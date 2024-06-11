@@ -9,6 +9,4 @@ class Download(Base):
     tag = Column(String, nullable=False)
     path = Column(String, nullable=False)
     filename = Column(String, nullable=False)
-    # , unique=True
-    # user = relationship('User', backref='information')
     __table_args__ = {'extend_existing': True}

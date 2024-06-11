@@ -9,18 +9,12 @@
     <body>
         <header class ="main-header">
             <div class ="row">
-                <a href = "/" 
-                    class="nav-link-1" id ="link-1"><nobr>Лого</nobr></a>
-                <a href = "/my_profile" 
-                        class="nav-link-2" id ="link-2"><nobr>Моя страница</nobr></a>
-                <a href = "/search" 
-                    class="nav-link-3" id ="link-3"><nobr>Поиск</nobr></a>                           
-                        <!--Вот тут если не авторизированный пользователь, то вторая ссылка пропадает display:none, в третьей текст меняется на "Вход"
-                        и добавляется margin-left: calc(50% - 130px);, у в четвертой текст меняется на "Регистрация" и соответственно ссылки меняются
-                        все это по класссам и айдишникам джавой -->
-                <a href ="/register" class="nav-link-4 hidden-button" id="link-5"><nobr>Регистрация</nobr></a>   
-                <a href = ""
-                class="nav-link-4" id ="link-4"><nobr>Выйти</nobr></a>      
+                <a href = "/" class="nav-link-3" id ="link-1"><img src ="/static/image/logo.jpg" id = "logo"></a>
+                <a href = "/my_profile" class="nav-link-2" id ="link-2"><nobr>Моя страница</nobr></a>
+                <a href = "/search" class="nav-link-3" id ="link-3"><nobr>Поиск</nobr></a>                           
+                <a href = "/login" class="nav-link-3 hidden-button" id ="link-6"><nobr>Вход</nobr></a>         
+                <a href ="/register" class="nav-link-3 hidden-button" id="link-5"><nobr>Регистрация</nobr></a>   
+                <a href = "" class="nav-link-3" id ="link-4"><nobr>Выйти</nobr></a>      
                 <script>
                     document.getElementById("link-4").addEventListener("click", function(event) {
                         event.preventDefault();
@@ -34,13 +28,14 @@
                                 location.reload();
                         })
                     });
-                </script>                         
+                </script>    
+                                        
         </header>
 
         <main>
             <section class = "main-info-1">
                 <div>                  
-                    <img class = "avatar" src =" " id = "profile-avatar" style="height: 120px; width: 120px;">
+                    <img class = "avatar" src =" " id = "profile-avatar" style="height: 120px; width: 130px;">
                     <div class = "name"  id = "user-name"> 
                         <span id = "first_name">Имя</span> 
                         <span id = "last_name">Фамилия</span> 
@@ -50,7 +45,7 @@
                         <button class="make-sub hidden-button" type ="submit" id="refuse-sub">Отписаться</button>
                     </form>
                     <div id="feedback">
-                        <button class ="edit-file">Редактировать профиль</button>
+                        <button class ="edit-file"  >Редактировать профиль</button>
                         <div class="popup">
                             <div class="popup__container">
                               <div class="popup__wrapper">
@@ -197,7 +192,7 @@
                 <div class ="Subscriptions">
                     <ul class ="Subscriptions-list"><a class = "go-to-Subscriptions-page" href ="#"><span class ="header">Подписки:</span> </a><span class ="header" id ="subscriptions-count">0</span>
                         <div class = "subscriptions-list">
-                            <!-- <li class = "Subscribers-list-item">
+                             <!-- <li class = "Subscribers-list-item">
                                 <a  href = "https://vk.com/miami51"  class = "profiles-href"><img class = "Subscribers-avatar" src ="/static/image/login.jpg" id = "avatar-1" style="height: 80px; width: 80px;" href="">
                                 <p class = "Subscribers-name" id ="name-1">Имя<br>Фамилия</p></a>
                             </li>
@@ -225,7 +220,7 @@
                             <li class = "Subscribers-list-item">
                                 <a href = "https://vk.com/miami51" class = "profiles-href"><img class = "Subscribers-avatar"src ="/static/image/login.jpg" id = "avatar-6" style="height: 80px; width: 80px;">
                                 <p class = "Subscribers-name" id ="name-6">Имя<br> Фамилия</p></a>
-                            </li>        -->
+                            </li>   -->     
                         </div>   
                     </ul>
                 </div>
@@ -242,9 +237,9 @@
                 <div class ="Subscribers">
                     <ul class ="Subscribers-text"><a class ="go-to-Subscribers-page" href ="#"><span class ="header">Подписчики:</span> </a><span class ="header" id ="subscribers-count">0</span>
                         <div class = "Subscribers-list">
-                            <!-- <li class = "Subscribers-list-item">
+                             <!--<li class = "Subscribers-list-item">
                                 <a href = "https://vk.com/miami51" class = "profiles-href"><img class = "Subscribers-avatar" src ="/static/image/login.jpg" id = "avatar-7" style="height: 80px; width: 80px;">
-                                <p class = "Subscribers-name" id ="first_name_sub">Имя</p> <p  class = "Subscribers-name" id ="last_name_sub">Фамилия</p></a>
+                                <p class = "Subscribers-name" id ="first_name_sub">Имя</p><p  class = "Subscribers-name" id ="last_name_sub">Фамилия</p></a>
                             </li>
 
                             <li class = "Subscribers-list-item">

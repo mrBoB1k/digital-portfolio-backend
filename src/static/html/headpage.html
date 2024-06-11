@@ -9,18 +9,12 @@
     <body>
         <header class ="main-header">
             <div class ="row">
-                <a href = "/" 
-                    class="nav-link-1" id ="link-1"><nobr>Лого</nobr></a>
-                <a href = "/my_profile" 
-                        class="nav-link-2" id ="link-2"><nobr>Моя страница</nobr></a>
-                <a href = "/search" 
-                    class="nav-link-3" id ="link-3"><nobr>Поиск</nobr></a>                           
-                        <!--Вот тут если не авторизированный пользователь, то вторая ссылка пропадает display:none, в третьей текст меняется на "Вход"
-                        и добавляется margin-left: calc(50% - 130px);, у в четвертой текст меняется на "Регистрация" и соответственно ссылки меняются
-                        все это по класссам и айдишникам джавой -->
-
-                <a href ="/register" class="nav-link-5 hidden-button" id="link-5"><nobr>Регистрация</nobr></a>   
-                <a href = "" class="nav-link-4" id ="link-4"><nobr>Выйти</nobr></a>      
+                <a href = "/" class="nav-link-3" id ="link-1"><img src ="/static/image/logo.jpg" id = "logo"></a>
+                <a href = "/my_profile" class="nav-link-2" id ="link-2"><nobr>Моя страница</nobr></a>
+                <a href = "/search" class="nav-link-3" id ="link-3"><nobr>Поиск</nobr></a>                           
+                <a href = "/login" class="nav-link-3 hidden-button" id ="link-6"><nobr>Вход</nobr></a>         
+                <a href ="/register" class="nav-link-3 hidden-button" id="link-5"><nobr>Регистрация</nobr></a>   
+                <a href = "" class="nav-link-3" id ="link-4"><nobr>Выйти</nobr></a>      
                 <script>
                     document.getElementById("link-4").addEventListener("click", function(event) {
                         event.preventDefault();
@@ -34,7 +28,7 @@
                                 location.reload();
                         })
                     });
-                </script>                                 
+                </script>                      
         </header>
         
         <main>
@@ -49,8 +43,8 @@
             <section class = "main-info-2">
                 <p class = "head-2">Почему стоит пользоваться цифровым портфолио?</p>
                     <div class ="list-1">
-                        <p class="left-item">Занимает меньше места, по<br> сравнению с бумажным<br> вариантом</p>
-                        <p class="right-item">При наличии ссылки можно<br> быстро ознакомиться с вашим<br> портфолио</p>
+                        <p class="left-item" id ="qvadrat-1">Занимает меньше места, по<br> сравнению с бумажным<br> вариантом</p>
+                        <p class="right-item"id ="qvadrat-2">При наличии ссылки можно<br> быстро ознакомиться с вашим<br> портфолио</p>
                     </div>  
                     <div class ="list-2">   
                         <p class="left-item"> Простой интерфейс, как для<br> просмотра, так и для<br> введения</p>                        
@@ -62,8 +56,8 @@
             <section class = "main-info-3">
                 <p class = "head-2">Наш сервис позволяет</p>
                     <div class ="list-1">
-                        <p class="left-item">Cоздать свой aккаунт, с<br> редактировать профиля</p>
-                        <p class="right-item">Добавлять в профиль личные<br> достижения</p>
+                        <p class="left-item" id ="qvadrat-3">Cоздать свой aккаунт, с<br> редактировать профиля</p>
+                        <p class="right-item" id ="qvadrat-4">Добавлять в профиль личные<br> достижения</p>
                     </div>  
                     <p></p>
                     <div class ="list-2">   
