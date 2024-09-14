@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.params import Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from redis import asyncio as aioredis
 
 from auth.base_config import auth_backend, fastapi_users, current_user
 from auth.models import User
@@ -62,24 +65,8 @@ app.include_router(router_search)
 app.include_router(router_sub)
 
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     # allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
-#     # allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
-#     #                "Authorization", "Access-Control-Allow-Credentials", "Vary", "Accept", "Connection",
-#     #                 "Referer", "Host", "User-Agent", "Accept-Language", "Accept-Encoding", "content-type",
-#     #                 "Referrer Policy", "Authorization", "Authorizations", "APIKeyCookie", "apiKey", "authorizations",
-#     #                 "bonds", "cookie", "In", "Name", "Value"],
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-
 origins = [
-    "http://192.168.1.181:8000",
-    "http://localhost:5432",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -90,3 +77,8 @@ app.add_middleware(
     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
                    "Authorization"],
 )
+
+@app.on_event("startup")
+async def startup_event():
+    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
