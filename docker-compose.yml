@@ -27,7 +27,7 @@ services:
       - 9999:8000
     depends_on:
       - db
-      - redis
+      # - redis
 
   # celery:
   #   build:
