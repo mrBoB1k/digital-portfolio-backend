@@ -5,6 +5,3 @@ venv/*
 __pycache__/
 *.py[cod]
 *$py.class
-/src/dynamic/
-/src/dynamic_avatar/
-/migrations/versions
