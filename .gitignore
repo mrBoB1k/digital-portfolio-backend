@@ -1,4 +1,6 @@
 .env
+.env-render
+.env-non-dev
 venv/*
 __pycache__/
 *.py[cod]
